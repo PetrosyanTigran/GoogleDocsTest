@@ -5,7 +5,7 @@ import { useAppSelector } from '../redux/hooks';
 import { FormDataComponent, FormDataComponentProps } from './FormDataComponent';
 import { AttachmentComponent } from './AttachmentComponent';
 import { AttachmentsFormDataType } from '../types';
-
+import "../scss/MainForm.scss"
 export const MainForm: FC = () => {
   const state = useAppSelector((state: RootState) => state.formReducer);
 
@@ -18,7 +18,7 @@ export const MainForm: FC = () => {
   };
 
   return (
-    <form id="my_form" onSubmit={handleSubmit}>
+    <form id="my_form" onSubmit={handleSubmit} >
       {state.form_data &&
         state.form_data.length > 0 &&
         state.form_data.map((el: FormDataComponentProps, idx: number) => {

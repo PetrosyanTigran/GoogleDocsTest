@@ -1,20 +1,21 @@
-import { Grid } from '@mui/material';
+import React from 'react'
 import { FormPanel } from './components/FormPanel';
 import { MainForm } from './components/MainForm';
 import { TemplateEditor } from './components/TemplateEditor';
-
+import "./scss/App.scss"
+import "./scss/Switch.scss"
 function App() {
   return (
-    <Grid container>
-      <Grid item md={6} sm={12}>
+    <div id="app">
+      <div style={{ width: '59%' }}>
         <FormPanel />
         <TemplateEditor />
-      </Grid>
-      <Grid item md={1} sm={12} />
-      <Grid item md={5} sm={12}>
+      </div>
+      <div style={{padding: "1%"}}></div>
+      <div id="main_form" >
         <MainForm />
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 }
 

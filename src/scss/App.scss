@@ -1,0 +1,42 @@
+#app {
+  display: flex;
+  align-items: center;
+  min-width: 62.5rem;
+  // margin-top: -2.5vh;
+  // width: 100%;
+  overflow-x: auto;
+}
+
+#main_form {
+  width: 39%;
+  height: 97.5vh;
+  overflow-y: auto;
+}
+
+.justify_center {
+  display: flex;
+  justify-content: center;
+}
+
+.justify_start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.align_center {
+  display: flex;
+  align-items: center;
+}
+.css-julti5-MuiSwitch-root {
+  width: auto;
+}
+.MuiSwitch-root {
+  width: 100px;
+}
+
+.justify_between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -39,6 +39,8 @@ import { styled, makeStyles } from '@mui/styles';
 const buttonStyles = {
   width: '30px',
   height: '30px',
+  // borderRadius: '4px',
+  // padding: '10px',
   border: '1px solid rgba(0, 0, 0, 0.12)',
 };
 
@@ -51,12 +53,23 @@ const CUSTOM_LINE_THROUGH_EVENT = new CustomEvent('MAKE_LINE_THROUGH');
 const CUSTOM_UNDERLINE_EVENT = new CustomEvent('MAKE_UNDERLINE');
 const CUSTOM_LEFT_EVENT = new CustomEvent('MAKE_LEFT');
 
+const useStyles = makeStyles({
+  input: {
+    width: '52px',
+    height: '24px',
+    border: '1px solid #E2E2E2',
+    boxSizing: 'border-box',
+    borderRadius: '4px',
+    marginLeft: '0.5rem',
+  },
+});
 
 export const EditIcons = () => {
   const [formats, setFormats] = useState<Array<string> | []>(() => []);
   const [alignment, setAlignment] = useState<string | null>('');
   const [lists, setLists] = useState<string | null>('');
 
+  const classes = useStyles();
   const hiddenFileInput = useRef<HTMLInputElement | null>(null);
 
   const handleAlignment = (
@@ -95,7 +108,7 @@ export const EditIcons = () => {
 return (
   <>
     <ToggleButtonGroup
-    className="align_center"
+    style={{display: "flex", alignItems: "center"}}
       value={formats}
       onChange={handleFormat}
       color="primary"
@@ -128,7 +141,7 @@ return (
       </StyledToggleButton>
     </ToggleButtonGroup>
     <ToggleButtonGroup
-    className="align_center"
+    style={{display: "flex", alignItems: "center"}}
 
       exclusive
       value={alignment}
@@ -153,7 +166,7 @@ return (
       </StyledToggleButton>
     </ToggleButtonGroup>
     <ToggleButtonGroup
-    className="align_center"
+    style={{display: "flex", alignItems: "center"}}
 
       value={lists}
       exclusive
@@ -169,13 +182,12 @@ return (
       </StyledToggleButton>
     </ToggleButtonGroup>
     
-    <div className="align_center">
+    <div style={{display: "flex", alignItems: "center"}}>
     <ToggleButtonGroup 
        color="primary"
        sx={{ mx: 1 }}
-       style={{marginLeft: 0}}
       >
-      <StyledToggleButton   value="primary" onClick={handleClick}>
+      <StyledToggleButton  value="primary" onClick={handleClick}>
       <img src={Image} alt="" />
       </StyledToggleButton>
       </ToggleButtonGroup>
@@ -184,7 +196,7 @@ return (
         ref={hiddenFileInput}
         style={{ display: 'none' }}
       />
-    <ToggleButtonGroup color="primary"> 
+    <ToggleButtonGroup style={{marginLeft: "10px"}}   color="primary"> 
     <StyledToggleButton value="back">
     <img src={LeftArrow} alt=""/>
     </StyledToggleButton>
@@ -193,7 +205,7 @@ return (
     </StyledToggleButton>
     </ToggleButtonGroup>
     <Input
-      id="font_size_input"
+      className={classes.input}
       type="number"
       defaultValue={24}
       inputProps={{

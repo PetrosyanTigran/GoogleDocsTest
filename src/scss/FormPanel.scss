@@ -1,0 +1,75 @@
+#form_panel {
+  height: 24vh;
+  border-radius: 0.5rem;
+  margin-bottom: 2vh;
+  #form_panel_content_1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 0rem;
+  }
+  #form_panel_content_2 {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0px 1rem;
+    #styled_attachment_button {
+      color: #5c5c5c;
+      background-color: white;
+      border: 0.0625rem solid #e2e2e2;
+      box-sizing: border-box;
+      border-radius: 0.25rem;
+      &:hover {
+        border-color: 0.0625rem solid #e2e2e2;
+        box-shadow: 0.0625rem solid #e2e2e2;
+        border: 0.0625rem solid #e2e2e2;
+        background-color: #e2e2e2;
+      }
+      &:active {
+        background-color: white;
+        border-color: 0.0625rem solid #e2e2e2;
+        box-shadow: 0.0625rem solid #f8f6f6;
+      }
+      &:focus {
+        background-color: white;
+        border-color: 0.0625rem solid #e2e2e2;
+        box-shadow: 0.0625rem solid #e2e2e2;
+      }
+    }
+  }
+  #font_size_input {
+    width: 2.5rem;
+    height: 1.875rem;
+    border: 0.0625rem solid #e2e2e2;
+    box-sizing: border-box;
+    border-radius: 0.25rem;
+    margin-left: 0.5rem;
+    padding-left: 0.1875rem;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      background-image: url("../components/assets/icons/down_arrow.svg"),
+        url("../components/assets/icons/up_arrow.svg");
+      background-position: center 75%, center 25%;
+      background-repeat: no-repeat, no-repeat no-repeat;
+
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 1em;
+      // border-left: 0.0625rem solid #bbb;
+      opacity: 0.5;
+      opacity: 1;
+      background-color: white;
+    }
+  }
+  .css-16ozbtf-MuiInputBase-root-MuiInput-root:after {
+    border: none;
+  }
+  .css-16ozbtf-MuiInputBase-root-MuiInput-root:before {
+    border: none;
+  }
+}

@@ -10,8 +10,8 @@ import {
   MenuItem,
   SelectChangeEvent,
   Typography,
+  Switch
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import {
   updateBaseField,
   removeField,
@@ -23,72 +23,12 @@ import {
 } from '../redux/actions';
 import { useAppDispatch } from '../redux/hooks';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { StyledSwitch } from './StyledComponents/StyledSwitch';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useSelectFormType } from '../hooks/useSelectFormType';
 import { ColumnType } from '../types';
 import { updateFormData } from '../redux/actions/formData';
 
-const useStyles = makeStyles({
-  root: {
-    borderRadius: '8px',
-    padding: '32px',
-    marginBottom: '1.3rem',
-    width: '684px',
-    background: '#FFFFFF',
-    boxShadow: '0px 4px 14px rgba(0, 0, 0, 0.02)',
-  },
-  flex: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  flexStart: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  flexBetween: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  numberBox: {
-    width: '36px',
-    height: '36px',
-    fontWeight: 'bold',
-    backgroundColor: '#f5f5f5',
-    color: '#5C5C5C',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  typeBox: {
-    height: '36px',
-    borderRadius: '4px',
-    border: 'none',
-    padding: '12px, 12px, 12px, 8px',
-    backgroundColor: '#f5f5f5',
-    color: '#5C5C5C',
-    '&:hover': {
-      borderColor: '1px solid #E2E2E2',
-      boxShadow: '1px solid #E2E2E2',
-      border: '1px solid #E2E2E2',
-    },
-    '&:active': {
-      backgroundColor: 'white',
-      borderColor: '1px solid #E2E2E2',
-      border: '1px solid #E2E2E2',
-      boxShadow: '1px solid #E2E2E2',
-    },
-    '&:focus': {
-      backgroundColor: 'white',
-      borderColor: '1px solid #E2E2E2',
-      boxShadow: '1px solid #E2E2E2',
-      border: '1px solid #E2E2E2',
-    },
-  },
-});
 
 type ArgsType = {
   options: string[];
@@ -118,7 +58,6 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
   title,
   args,
 }) => {
-  const classes = useStyles();
   const dispatch = useAppDispatch();
   const { selectFormTypes } = useSelectFormType();
   const colTytleTypes = useMemo(
@@ -127,20 +66,18 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
   );
 
   return (
-    <Card className={classes.root}>
+    <Card id="form_data">
       <Box
-        sx={{
-          margin: '0 0 12px 0',
-        }}
-        className={classes.flexBetween}
+        sx={{margin: '0 0 0.75rem 0'}}
+        className="align_center"
       >
-        <Box className={classes.flex}>
-          <Box className={classes.numberBox}>{index! + 1}</Box>
+        <Box className="justify_center" >
+          <Box className="index_container">{index! + 1}</Box>
           <Box sx={{ ml: 1 }}>
             <Select
               value={type}
               IconComponent={() => null}
-              className={classes.typeBox}
+              className="type_container"
               onChange={(e: SelectChangeEvent) =>
                 dispatch(
                   updateFormData(css_selector, {
@@ -154,12 +91,12 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
               {selectFormTypes.map(({ icon, name, type }) => (
                 <MenuItem value={type} key={type}>
                   <Box
-                    className={classes.flexBetween}
-                    sx={{
-                      alignItems: 'center',
-                    }}
+                    className="align_center"
+                    
                   >
+                    <div style={{ display: "flex", marginRight: "16.5px", alignItems: "center"}}>
                     {icon}
+                    </div>
                     {name}
                   </Box>
                 </MenuItem>
@@ -167,21 +104,19 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
             </Select>
           </Box>
         </Box>
-        <Box className={classes.flex} sx={{ ml: 'auto' }}>
+        <Box className="justify_center" sx={{ ml: 'auto' }}>
           <FormControlLabel
-            control={
-              <StyledSwitch
-                value={required}
-                onChange={() =>
-                  dispatch(
-                    updateBaseField(css_selector, {
-                      title,
-                      type,
-                      required: !required,
-                    })
-                  )
-                }
-              />
+            control={<Switch className="styled_switch"  disableRipple  value={required}
+  onChange={() =>
+    dispatch(
+      updateBaseField(css_selector, {
+        title,
+        type,
+        required: !required,
+      })
+    )
+  }/>
+             
             }
             label="Не обязательно"
           />
@@ -209,14 +144,16 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
       {type === 'text_options' ? (
         <>
           <Box
-            className={classes.flexStart}
+            className="justify_start"
             sx={{
               margin: '10px 0',
             }}
           >
             <Typography variant="subtitle1">Выпадающий список</Typography>
-            <StyledSwitch
-              value={additional!}
+            <Switch
+             disableRipple
+            className="styled_switch"
+            value={additional!}
               onChange={() =>
                 dispatch(
                   updateComplexFieldTypeText(css_selector, {
@@ -271,7 +208,7 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
       ) : null}
       {type === 'table' ? (
         <>
-          <Box className={classes.flexStart}>
+          <Box className="justify_start">
             <Typography variant="subtitle1">Количество столбцов</Typography>
             <IconButton
               onClick={() => dispatch(createTableColumn(css_selector))}
@@ -288,8 +225,8 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
           {args.columns && args.columns.length > 0
             ? args.columns.map((el: ColumnType, idx: number) => {
                 return (
-                  <Box className={classes.flexStart} sx={{ mb: 1.5 }} key={idx}>
-                    <span className={classes.numberBox}>{idx + 1}</span>
+                  <Box className="justify_start" sx={{ mb: 1.5 }} key={idx}>
+                    <span className="index_container">{idx + 1}</span>
                     <Box sx={{ ml: 1 }}>
                       <TextField
                         value={el.col_title}
@@ -319,7 +256,7 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
                     </Box>
                     <Box sx={{ ml: 'auto' }}>
                       <Select
-                        className={classes.typeBox}
+                        className="type_container"
                         inputProps={{ 'aria-label': 'Without label' }}
                         IconComponent={() => null}
                         value={el.col_type}

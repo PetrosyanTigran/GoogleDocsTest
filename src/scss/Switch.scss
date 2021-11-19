@@ -1,0 +1,29 @@
+.css-julti5-MuiSwitch-root {
+  width: 4.375rem !important;
+  height: 3.125rem !important;
+}
+.MuiSwitch-track {
+  border-radius: 1.4375rem !important;
+  background-color: #e2e2e2 !important;
+  opacity: 1 !important;
+}
+.css-jsexje-MuiSwitch-thumb {
+  margin-left: 0.375rem !important;
+  margin-top: 0.0625rem !important;
+}
+.css-1hhuuo9-MuiButtonBase-root-MuiSwitch-switchBase:hover {
+  background-color: transparent !important;
+}
+.MuiSwitch-thumb {
+  transform: translate(0, 25%);
+  background-color: white;
+}
+.Mui-checked .MuiSwitch-thumb {
+  background-color: white;
+}
+
+.css-1hhuuo9-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked
+  + .MuiSwitch-track {
+  opacity: 1 !important;
+  background-color: #1a65da !important;
+}

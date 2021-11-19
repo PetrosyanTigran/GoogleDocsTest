@@ -10,145 +10,116 @@ import EventIcon from '@mui/icons-material/Event';
 import { styled, makeStyles } from '@mui/styles';
 import { useAppDispatch } from '../redux/hooks';
 import { createFormData } from '../redux/actions/formData';
-
-const StyledButton = styled(Button)({
-  display: 'inline-flex',
-  flexGrow: 0,
-  flex: '1 1 auto',
-  margin: '5px',
-  width: 'auto',
-  color: '#5C5C5C',
-  borderColor: '1px solid #E2E2E2',
-  border: '1px solid #E2E2E2',
-  fontWeight: 'normal',
-  borderRadius: '4px',
-  fontSize: '14px',
-  boxSizing: 'border-box',
-  '&:hover': {
-    borderColor: '1px solid #E2E2E2',
-    border: '1px solid #E2E2E2',
-
-    boxShadow: '#5C5C5C',
-  },
-  '&:active': {
-    boxShadow: '#5C5C5C',
-    borderColor: '1px solid #E2E2E2',
-    border: '1px solid #E2E2E2',
-  },
-  '&:focus': {
-    boxShadow: '#5C5C5C',
-  },
-});
-
-const useStyles = makeStyles({
-  root: {
-    padding: '12px',
-    position: 'absolute',
-    width: '516px',
-    height: '104px',
-    left: '205px',
-    bottom: '0px',
-    background: '#FFFFFF',
-    boxShadow: '0px -5px 20px rgba(0, 0, 0, 0.05)',
-    borderRadius: '8px 8px 0px 0px',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  flex: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    margin: '0 -5px',
-  },
-});
-
+import "./../scss/TamplateEditor.scss"
+import calendar_today from "../components/assets/icons/calendar_today.svg"
+import text from "../components/assets/icons/text.svg"
+import person from "../components/assets/icons/person.svg"
+import pen from "../components/assets/icons/pen.svg"
+import map from "../components/assets/icons/map.svg"
+import table from "../components/assets/icons/table.svg"
+import time from "../components/assets/icons/time.svg"
+import date_and_time from "../components/assets/icons/date_and_time.svg"
+import { width } from '@mui/system';
 export const FormIcons = () => {
   const dispatch = useAppDispatch();
-  const classes = useStyles();
 
   return (
-    <Box className={classes.root}>
-      <Box className={classes.flex}>
-        <StyledButton
+    <Box  id="form_icons">
+      <Box className="justify_start">
+        <Button
+        className="form_icon"
           variant="outlined"
           fullWidth
           size="small"
-          startIcon={<CalendarTodayIcon />}
+          startIcon={<img src={calendar_today} alt=""/>}
           onClick={() => dispatch(createFormData('date'))}
         >
           Дата
-        </StyledButton>
+        </Button>
 
-        <StyledButton
+        <Button
+        className="form_icon"
           variant="outlined"
           fullWidth
           size="small"
-          startIcon={<TextFieldsIcon />}
+          startIcon={<img src={text} alt=""/>}
           onClick={() => dispatch(createFormData('text_options'))}
         >
           Текст
-        </StyledButton>
+        </Button>
 
-        <StyledButton
+        <Button
+        className="form_icon"
           variant="outlined"
           fullWidth
           size="small"
-          startIcon={<PersonIcon />}
+          startIcon={<img src={person} alt=""/>}
           onClick={() => dispatch(createFormData('user'))}
         >
           Сотрудник
-        </StyledButton>
+        </Button>
 
-        <StyledButton
+        <Button
+        className="form_icon"
           variant="outlined"
           fullWidth
           size="small"
-          startIcon={<CreateIcon />}
+          startIcon={<img src={pen} alt=""/>}
+
           onClick={() => dispatch(createFormData('signer'))}
         >
           Подписант
-        </StyledButton>
+        </Button>
       </Box>
-      <Box className={classes.flex}>
-        <StyledButton
+      <Box className="justify_start">
+        <Button
+        className="form_icon"
           variant="outlined"
           fullWidth
           size="small"
-          startIcon={<LocationOnIcon />}
+          startIcon={<img src={map} style={{width: "12px"}} alt=""/>}
+          
+
           onClick={() => dispatch(createFormData('location'))}
         >
           Место
-        </StyledButton>
+        </Button>
 
-        <StyledButton
+        <Button
+        className="form_icon"
           variant="outlined"
           fullWidth
           size="small"
-          startIcon={<TableViewIcon />}
+          startIcon={<img src={table} alt=""/>}
+
           onClick={() => dispatch(createFormData('table'))}
         >
           Таблица
-        </StyledButton>
+        </Button>
 
-        <StyledButton
+        <Button
+        className="form_icon"
           variant="outlined"
           fullWidth
           size="small"
-          startIcon={<AccessTimeIcon />}
+          startIcon={<img src={time} alt=""/>}
+
           onClick={() => dispatch(createFormData('time'))}
         >
           Время
-        </StyledButton>
+        </Button>
 
-        <StyledButton
+        <Button
+        className="form_icon"
           variant="outlined"
           fullWidth
           size="small"
-          startIcon={<EventIcon />}
+          startIcon={<div> <img src={date_and_time} alt=""/> <img src={time} style={{position: "absolute", width: "12px", top: "16px", left: "14px", }} alt=""/> </div>}
+
           onClick={() => dispatch(createFormData('datetime'))}
         >
           Дата и время
-        </StyledButton>
+        </Button>
       </Box>
     </Box>
   );
