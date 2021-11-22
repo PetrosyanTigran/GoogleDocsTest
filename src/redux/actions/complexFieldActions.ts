@@ -70,6 +70,7 @@ export const createTableColumn = (css_selector: string) => {
       css_selector,
       col_title: '',
       col_type: '',
+      col_title_error: '',
     },
   };
 };

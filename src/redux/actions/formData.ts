@@ -7,8 +7,8 @@ export const createFormData = (type: string) => {
     type: CREATE_FORM_DATA,
     payload: {
       title: '',
+      title_error: '',
       type,
-      error_message: '',
       css_selector: `#${uuidv4()}`,
       required: true,
       additional: false,

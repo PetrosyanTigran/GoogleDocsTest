@@ -6,15 +6,24 @@ import * as serviceWorker from './serviceWorker';
 import { DefaultThemeProvider } from './theme';
 import { CssBaseline } from '@mui/material';
 import { store } from './redux/store';
+import { SnackbarProvider } from 'notistack';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <DefaultThemeProvider>
-        <CssBaseline />
-        <App />
-      </DefaultThemeProvider>
-    </Provider>
+    <SnackbarProvider
+      maxSnack={1}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'right',
+      }}
+    >
+      <Provider store={store}>
+        <DefaultThemeProvider>
+          <CssBaseline />
+          <App />
+        </DefaultThemeProvider>
+      </Provider>
+    </SnackbarProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -38,11 +38,13 @@ type AttachmentComponentProps = {
   required: boolean;
   idx: number;
   name: string;
+  attachment_error_text?: string;
 };
 export const AttachmentComponent: FC<AttachmentComponentProps> = ({
   title,
   required,
   idx,
+  attachment_error_text,
 }) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
@@ -78,6 +80,7 @@ export const AttachmentComponent: FC<AttachmentComponentProps> = ({
         type="text"
         fullWidth
         value={title}
+        error={!!attachment_error_text!}
         placeholder="Название вложения"
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           dispatch(

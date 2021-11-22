@@ -107,6 +107,7 @@ export type FormDataComponentProps = {
   additional?: false;
   args: ArgsType;
   name: string;
+  title_error?: string;
 };
 
 export const FormDataComponent: FC<FormDataComponentProps> = ({
@@ -117,9 +118,11 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
   additional,
   title,
   args,
+  title_error,
 }) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
+
   const { selectFormTypes } = useSelectFormType();
   const colTytleTypes = useMemo(
     () => [{ name: 'Выберете тип', icon: '', type: '' }, ...selectFormTypes],
@@ -194,6 +197,7 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
       <TextField
         type="string"
         fullWidth
+        error={!!title_error}
         label="Название пункта"
         value={title}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -239,6 +243,7 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
                     fullWidth
                     label="Вариант"
                     value={el}
+                    error={!el}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       dispatch(
                         updateComplexFieldTypeText(css_selector, {
@@ -295,6 +300,7 @@ export const FormDataComponent: FC<FormDataComponentProps> = ({
                         value={el.col_title}
                         placeholder="Название столбца"
                         variant="standard"
+                        error={!!el.col_title_error!}
                         onChange={(e: ChangeEvent<HTMLInputElement>) =>
                           dispatch(
                             updateComplexFieldTypeTable(css_selector, {

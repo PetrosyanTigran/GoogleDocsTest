@@ -13,9 +13,20 @@ import {
   UPDATE_ATTACHMENT,
   CREATE_FORM_DATA,
   UPDATE_FORM_DATA,
+  SET_TEMPLATE_NAME_ERROR_MESSAGE,
+  CLEAR_TEMPLATE_NAME_ERROR_MESSAGE,
+  SET_TITLE_ERROR_MESSAGE,
+  CLEAR_TITLE_ERROR_MESSAGE,
+  SET_COL_TITLE_ERROR_MESSAGE,
+  CLEAR_COL_TITLE_ERROR_MESSAGE,
+  SET_TEXT_OPTIONS_ERROR_MESSAGE,
+  CLEAR_TEXT_OPTIONS_ERROR_MESSAGE,
+  SET_ATTACHMENT_ERROR_TEXT,
+  CLEAR_ATTACHMENT_ERROR_TEXT,
 } from '../actionTypes';
 import { AnyAction } from 'redux';
-import { FormDataType } from '../../types';
+import { AttachmentsFormDataType, ColumnType, FormDataType } from '../../types';
+import { ERROR_MESSAGE } from '../../constants';
 
 const initialState = {
   template_name: '',
@@ -23,23 +34,25 @@ const initialState = {
   html_body: '<hmtl></html>',
   form_data: [],
   attachments: [],
+  template_name_error: '',
 } as any;
 
 export const formReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case CREATE_FORM_DATA: {
-      const { title, type, css_selector, required, additional, error_message } =
+      const { title, type, css_selector, required, additional, title_error } =
         action.payload;
       if (type === 'table') {
         return {
           ...state,
+
           form_data: [
             ...state.form_data,
             {
               title,
               type,
+              title_error,
               css_selector,
-              error_message,
               required,
               args: {
                 columns: [],
@@ -50,6 +63,7 @@ export const formReducer = (state = initialState, action: AnyAction) => {
       } else if (type === 'text_options') {
         return {
           ...state,
+
           form_data: [
             ...state.form_data,
             {
@@ -57,7 +71,7 @@ export const formReducer = (state = initialState, action: AnyAction) => {
               type,
               css_selector,
               additional,
-              error_message,
+              title_error,
               required,
               args: {
                 options: [],
@@ -68,13 +82,14 @@ export const formReducer = (state = initialState, action: AnyAction) => {
       } else {
         return {
           ...state,
+
           form_data: [
             ...state.form_data,
             {
               title,
               type,
               css_selector,
-              error_message,
+              title_error,
               required,
             },
           ],
@@ -220,7 +235,8 @@ export const formReducer = (state = initialState, action: AnyAction) => {
     }
 
     case CREATE_TABLE_COLUMN: {
-      const { col_title, col_type, css_selector } = action.payload;
+      const { col_title, col_type, css_selector, col_title_error } =
+        action.payload;
 
       return {
         ...state,
@@ -230,7 +246,10 @@ export const formReducer = (state = initialState, action: AnyAction) => {
               ? {
                   ...el,
                   args: {
-                    columns: [...el?.args?.columns!, { col_title, col_type }],
+                    columns: [
+                      ...el?.args?.columns!,
+                      { col_title, col_type, col_title_error },
+                    ],
                   },
                 }
               : el
@@ -260,10 +279,13 @@ export const formReducer = (state = initialState, action: AnyAction) => {
 
     /******************************** Attachment  ***********************************************/
     case CREATE_ATTACHMENT: {
-      const { title, required } = action.payload;
+      const { title, required, attachment_error_text } = action.payload;
       return {
         ...state,
-        attachments: [...state.attachments, { title, required }],
+        attachments: [
+          ...state.attachments,
+          { title, required, attachment_error_text },
+        ],
       };
     }
 
@@ -281,13 +303,164 @@ export const formReducer = (state = initialState, action: AnyAction) => {
       const { title, required, idx } = action.payload;
       return {
         ...state,
-        attachments: state.attachments.map((el: any, index: number) =>
-          index === idx
+        attachments: state.attachments.map(
+          (el: AttachmentsFormDataType, index: number) =>
+            index === idx
+              ? {
+                  ...el,
+                  title,
+                  required,
+                }
+              : el
+        ),
+      };
+    }
+
+    /********************* ERROR_MESSAGE *******************/
+
+    case SET_TEMPLATE_NAME_ERROR_MESSAGE: {
+      return {
+        ...state,
+        template_name_error: ERROR_MESSAGE,
+      };
+    }
+
+    case CLEAR_TEMPLATE_NAME_ERROR_MESSAGE: {
+      return {
+        ...state,
+        template_name_error: '',
+      };
+    }
+
+    case SET_TITLE_ERROR_MESSAGE: {
+      const { cssSelector } = action.payload;
+      return {
+        ...state,
+        form_data: state.form_data.map((el: FormDataType) =>
+          el.css_selector === cssSelector
             ? {
-                title,
-                required,
+                ...el,
+                title_error: ERROR_MESSAGE,
               }
             : el
+        ),
+      };
+    }
+
+    case CLEAR_TITLE_ERROR_MESSAGE: {
+      const { cssSelector } = action.payload;
+      return {
+        ...state,
+        form_data: state.form_data.map((el: FormDataType) =>
+          el.css_selector === cssSelector
+            ? {
+                ...el,
+                title_error: '',
+              }
+            : el
+        ),
+      };
+    }
+
+    case SET_COL_TITLE_ERROR_MESSAGE: {
+      const { cssSelector, idx } = action.payload;
+      return {
+        ...state,
+        form_data: state.form_data.map((el: FormDataType) => {
+          if (el.css_selector === cssSelector) {
+            return {
+              ...el,
+              args: {
+                columns: el?.args?.columns!.map(
+                  (el: ColumnType, index: number) =>
+                    index === idx
+                      ? {
+                          ...el,
+                          col_title_error: ERROR_MESSAGE,
+                        }
+                      : el
+                ),
+              },
+            };
+          } else return el;
+        }),
+      };
+    }
+
+    case CLEAR_COL_TITLE_ERROR_MESSAGE: {
+      const { cssSelector, idx } = action.payload;
+      return {
+        ...state,
+        form_data: state.form_data.map((el: FormDataType) => {
+          if (el.css_selector === cssSelector) {
+            return {
+              ...el,
+              args: {
+                columns: el?.args?.columns!.map(
+                  (el: ColumnType, index: number) =>
+                    index === idx
+                      ? {
+                          ...el,
+                          col_title_error: '',
+                        }
+                      : el
+                ),
+              },
+            };
+          } else return el;
+        }),
+      };
+    }
+
+    // case SET_TEXT_OPTIONS_ERROR_MESSAGE: {
+    //   const { cssSelector, idx } = action.payload;
+    //   return {
+    //     ...state,
+    //     form_data: state.form_data.map((el: FormDataType) => {
+    //       if (el.type === 'text_options') {
+    //         if (el.css_selector === cssSelector) {
+    //           return {
+    //             ...el,
+    //             args: {
+    //               options: el.args?.options?.map(
+    //                 (el: string, index: number) => idx === index
+    //               ),
+    //             },
+    //           };
+    //         }
+    //       }
+    //     }),
+    //   };
+    // }
+
+    case SET_ATTACHMENT_ERROR_TEXT: {
+      const { idx } = action.payload;
+      return {
+        ...state,
+        attachments: state.attachments.map(
+          (el: AttachmentsFormDataType, index: number) =>
+            idx === index
+              ? {
+                  ...el,
+                  attachment_error_text: ERROR_MESSAGE,
+                }
+              : el
+        ),
+      };
+    }
+
+    case CLEAR_ATTACHMENT_ERROR_TEXT: {
+      const { idx } = action.payload;
+      return {
+        ...state,
+        attachments: state.attachments.map(
+          (el: AttachmentsFormDataType, index: number) =>
+            idx === index
+              ? {
+                  ...el,
+                  attachment_error_text: '',
+                }
+              : el
         ),
       };
     }

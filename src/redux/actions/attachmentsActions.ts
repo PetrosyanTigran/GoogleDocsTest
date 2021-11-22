@@ -10,6 +10,7 @@ export const createAttachment = () => {
     payload: {
       title: '',
       required: true,
+      attachment_error_text: '',
     },
   };
 };

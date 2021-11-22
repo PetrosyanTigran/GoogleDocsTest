@@ -1,3 +1,5 @@
+import { SlideProps } from '@mui/material';
+
 export type BaseFieldType =
   | 'date'
   | 'time'
@@ -13,14 +15,14 @@ export type AllFieldTypes = BaseFieldType | TextFieldTypes | TableFieldTypes;
 
 export type FormDataType = {
   title: string;
+  title_error?: string;
   type: string;
   css_selector?: string;
   required: boolean;
   additional?: false;
-  error_message?: string;
   args?: {
     columns?: {
-      error_message?: string;
+      col_title_error?: string;
       col_title?: string;
       col_type?: string;
     }[];
@@ -29,13 +31,14 @@ export type FormDataType = {
 };
 
 export type AttachmentsFormDataType = {
+  attachment_error_text?: string;
   title: string;
   required: boolean;
 };
 
 export type FormType = {
   template_name: string;
-  errir_message?: string;
+  template_name_error?: '';
   project: number;
   html_body: string;
   form_data: FormDataType[];
@@ -45,4 +48,7 @@ export type FormType = {
 export type ColumnType = {
   col_type?: string;
   col_title?: string;
+  col_title_error?: string;
 };
+
+export type TransitionProps = Omit<SlideProps, 'direction'>;

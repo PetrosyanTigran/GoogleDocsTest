@@ -64,6 +64,9 @@ export const FormPanel: FC<{}> = () => {
   const template_name = useAppSelector(
     (state: RootState) => state.formReducer?.template_name
   );
+  const template_name_error = useAppSelector(
+    (state: RootState) => state.formReducer.template_name_error
+  );
   const dispatch = useAppDispatch();
 
   const classes = useStyles();
@@ -102,6 +105,7 @@ export const FormPanel: FC<{}> = () => {
           }
           inputProps={{ style: { fontWeight: 500 } }}
           InputLabelProps={{ style: { fontWeight: 500 } }}
+          error={!!template_name_error}
         />
       </CardActions>
       <CardContent sx={{ display: 'flex', justifyContent: 'flex-start' }}>
